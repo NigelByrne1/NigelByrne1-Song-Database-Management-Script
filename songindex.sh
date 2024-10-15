@@ -15,10 +15,22 @@ clear
 echo -e "\nSong Database Management System"
 
 #(!-f) searches for file song_database.txt and if there is not result then touch creates one
+echo -ne "Searching for existing Song Database"
+for ((i = 0 ; i < 5 ; i++)); do
+    echo -ne "."
+    sleep 0.5
+done
+echo ""
 if [ ! -f "song_database.txt" ]; then  
-    echo "Database file not found. Creating a new song database file..."
+    echo "Database file not found. Creating a new song database file"
     touch "song_database.txt"
+else 
+    echo "Database file found"
 fi
+sleep 1
+
+clear
+echo -e "Song Database Management System"
 
 #create a variable to hold the filename for textfile
 song_db="song_database.txt"
