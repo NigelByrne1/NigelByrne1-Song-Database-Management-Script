@@ -128,17 +128,37 @@ generate_report(){
 }
 
 save_backup(){
-    echo "placeholder"
-    #save a backup file .bak - error handling "are you sure?? this will overwrite the existing backup"
+    clear
+    echo -e "~~~~~~~~~~~~\n Save Backup\n~~~~~~~~~~~~"
+    read -p "Are you sure you want to overwrite the existing backup? (y/n): " confirm
+    if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
+        cp "$song_db" "${song_db}.bak"
+        echo "Backup saved successfully!"
+    else
+        echo "Backup operation canceled."
+    fi
 }
 
 load_backup(){
-    echo "placeholder"
-    #load a backup file - error handling "are you sure? this will overwrite current database with a backup"
+    clear
+    echo -e "~~~~~~~~~~~~\n Load Backup\n~~~~~~~~~~~~"
+    read -p "Are you sure you want to load the backup? This will overwrite the current database. (y/n): " confirm
+    if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
+        if [ -f "${song_db}.bak" ]; then
+            cp "${song_db}.bak" "$song_db"
+            echo "Backup loaded successfully!"
+        else
+            echo "No backup file found."
+        fi
+    else
+        echo "Load backup operation canceled."
+    fi
 }
 
 main_menu(){
+    
     while true; do 
+        clear
         echo -e "~~~~~~~~~~~~\n Main Menu\n~~~~~~~~~~~~"
         echo "1. Add a new song"
         echo "2. Search for a song"
