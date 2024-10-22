@@ -113,9 +113,8 @@ search_song(){
         #the \ before the " makes sure the quotes are printed in the echo and no seen as special characters
         echo -e "\nNo records for \"$search_term\" found. Please try again"
     else
-        echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        echo -e "\n~~~~~~~~~~~~~~~~ Results ~~~~~~~~~~~~~~~~"
         echo "Track ID, Artist, Title, Genre, BPM, Key"
-        echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         echo -e "$searchResult\n"
     fi
 
@@ -124,12 +123,22 @@ search_song(){
 }
 
 remove_song(){
-    echo "remove a song.."
-    #todo write rest of function
-    
-    #list songs option?
+    clear
+    echo -e "~~~~~~~~~~~~\n Remove Song\n~~~~~~~~~~~~"
 
-    #remove by id
+    read -p "Would you like to list all songs before removing? (y/n): " list_choice
+    if [[ "$list_choice" == "y" || "$list_choice" == "Y" ]]; then
+        cat "$song_db"
+    fi
+
+    while true; do
+        read -p "Enter the Track ID of the song to remove: " track_id
+        #if track_id found
+            #are you sure y/n
+            #if y sed delete
+            #else no song removed
+        #else echo track not found
+    done
 
     #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
     read -p "Press [Enter] to continue..."
