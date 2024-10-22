@@ -92,39 +92,56 @@ add_song(){
     #auto assign track id based on number of lines in db file eg id = "(number of lines in file +1)"
     track_id=$(( $(wc -l < "$song_db") + 1 ))
 
-    #add song record >> comma delimiter
+    #add song record comma delimiter >> song_db
     echo "$track_id,$artist,$title,$genre,$bpm,$key" >> "$song_db"
     clear
     echo "Song added successfully!"
+
+    #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
+    read -p "Press [Enter] to continue..."
+
 }
 
 search_song(){
-    echo "search for a song.."
-    #todo write rest of function
-    #search by id
+    clear
+    echo -e "~~~~~~~~~~~~\n Search Song\n~~~~~~~~~~~~"
+    read -p "Enter search term (ID, artist, title, BPM, or key): " search_term
+    
+    searchResult=$(grep -i "$search_term" "$song_db")
 
-    #search by title
+    if [ -z "$searchResult" ]; then
+        #the \ before the " makes sure the quotes are printed in the echo and no seen as special characters
+        echo -e "\nNo records for \"$search_term\" found. Please try again"
+    else
+        echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        echo "Track ID, Artist, Title, Genre, BPM, Key"
+        echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        echo -e "$searchResult\n"
+    fi
 
-    #search by artist
-
-    #search by bpm range
-
-    #search by key
+    #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
+    read -p "Press [Enter] to continue..."
 }
 
 remove_song(){
     echo "remove a song.."
     #todo write rest of function
-
+    
     #list songs option?
 
     #remove by id
+
+    #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
+    read -p "Press [Enter] to continue..."
 }
 
 generate_report(){
     echo "generate a report.."
+
     #todo write rest of function
 
+    #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
+    read -p "Press [Enter] to continue..."
 }
 
 save_backup(){
@@ -137,6 +154,8 @@ save_backup(){
     else
         echo "Backup operation canceled."
     fi
+    #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
+    read -p "Press [Enter] to continue..."
 }
 
 load_backup(){
@@ -153,6 +172,8 @@ load_backup(){
     else
         echo "Load backup operation canceled."
     fi
+    #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
+    read -p "Press [Enter] to continue..."
 }
 
 main_menu(){
@@ -184,6 +205,8 @@ main_menu(){
                 ;;
             *)
                 echo "Invalid option. Please choose a valid menu option"
+                #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
+                read -p "Press [Enter] to continue..."
                 ;;
         esac
     done
