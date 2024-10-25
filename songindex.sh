@@ -5,6 +5,14 @@
 # github:
 # youtube video:  
 
+
+exit_option() {
+    if [ "$1" == "exit1234" ]; then
+        echo "Exiting the app thank you!"
+        exit 0
+    fi
+}
+
 #clear terminal
 clear
 echo -e "\nSong Database Management System"
@@ -26,17 +34,20 @@ fi
 sleep 1
 
 clear
-echo -e "Song Database Management System"
+
 
 #create a variable to hold the filename for textfile
 song_db="song_database.txt"
 
 add_song(){
     clear
+    echo -e "Song Database Management System"
+    echo -e "Type "exit1234" for any input to quit the app"
     echo -e "~~~~~~~~~~~~\n Add Song\n~~~~~~~~~~~~"
     #artist section with validation 
     while true; do
         read -p "Enter artist name: " artist
+        exit_option "$artist"
         if [ -z "$artist" ]; then
             echo "Artist name cannot be empty. Please enter a valid artist name."
         else
@@ -46,6 +57,7 @@ add_song(){
     #song title scection with validation
     while true; do
         read -p "Enter song title: " title
+        exit_option "$title"
         if [ -z "$title" ]; then
             echo "Title name cannot be empty. Please enter a valid Title for song."
         else
@@ -55,6 +67,7 @@ add_song(){
     #genre section with multible choice menu using case $choice
     while true; do
         read -p "Choose an Genre: 1= Pop, 2=Dance, 3=Rock 4=Other: " choice
+        exit_option "$choice"
         case $choice in 
         1) genre="Pop";break;;
         2) genre="Dance";break;;
@@ -72,6 +85,7 @@ add_song(){
     #$ = the end of string
     while true; do
         read -p "Enter the tracks BPM (beats per minute), must be a number: " bpm
+        exit_option "$bpm"
         if [[ -z "$bpm" ]]; then
             echo "BPM must not be empty. Please enter a BPM"
         elif [[ "$bpm" =~ ^[0-9]+$ ]]; then 
@@ -84,6 +98,7 @@ add_song(){
     #key section must be valid camelot key for DJs
     while true; do
         read -p "Enter Key of Song (must be a camelot key 1A, 12B etc): " key
+        exit_option "$key"
         if [[ "$key" == "1A" || "$key" == "1B" || "$key" == "2A" || "$key" == "2B" || "$key" == "3A" || "$key" == "3B" || "$key" == "4A" || "$key" == "4B" || "$key" == "5A" || "$key" == "5B" || "$key" == "6A" || "$key" == "6B" || "$key" == "7A" || "$key" == "7B" || "$key" == "8A" || "$key" == "8B" || "$key" == "9A" || "$key" == "9B" || "$key" == "10A" || "$key" == "10B" || "$key" == "11A" || "$key" == "11B" || "$key" == "12A" || "$key" == "12B" ]]; then
             break
         else
@@ -106,8 +121,13 @@ add_song(){
 
 search_song(){
     clear
+    echo -e "Song Database Management System"
+    echo -e "Type "exit1234" for any input to quit the app"
     echo -e "~~~~~~~~~~~~\n Search Song\n~~~~~~~~~~~~"
     read -p "Enter search term (ID, artist, title, BPM, or key): " search_term
+
+    exit_option "$search_term"
+
     #grep -i for case insensitivity 
     searchResult=$(grep -i "$search_term" "$song_db")
 
@@ -126,6 +146,7 @@ search_song(){
 
 remove_song(){
     clear
+    echo -e "Song Database Management System"
     echo -e "~~~~~~~~~~~~\n Remove Song\n~~~~~~~~~~~~"
 
     read -p "Would you like to list all songs before removing? (y/n): " list_choice
@@ -139,6 +160,9 @@ remove_song(){
 
     while true; do
         read -p "Enter the Track ID of the song to remove: " track_id
+
+    	exit_option "$track_id"
+
         #Check if the Track ID exists in the database using grep same as search -q means it runs without printing result
         if grep -q "^$track_id," "$song_db"; then
             #Confirm deletion
@@ -165,6 +189,7 @@ remove_song(){
 
 generate_report(){
     clear
+    echo -e "Song Database Management System"
     echo -e "~~~~~~~~~~~~\n Generate Report\n~~~~~~~~~~~~"
 
     #Check if the database is empty, -s checks to see if file exists and if the size of the file is greater than zero
@@ -206,6 +231,7 @@ generate_report(){
 
 save_backup(){
     clear
+    echo -e "Song Database Management System"
     echo -e "~~~~~~~~~~~~\n Save Backup\n~~~~~~~~~~~~"
     read -p "Are you sure you want to overwrite the existing backup? (y/n): " confirm
     if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
@@ -220,6 +246,7 @@ save_backup(){
 
 load_backup(){
     clear
+    echo -e "Song Database Management System"
     echo -e "~~~~~~~~~~~~\n Load Backup\n~~~~~~~~~~~~"
     read -p "Are you sure you want to load the backup? This will overwrite the current database. (y/n): " confirm
     if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
@@ -240,6 +267,7 @@ main_menu(){
     
     while true; do 
         clear
+        echo -e "Song Database Management System"
         echo -e "~~~~~~~~~~~~\n Main Menu\n~~~~~~~~~~~~"
         echo "1. Add a new song"
         echo "2. Search for a song"
