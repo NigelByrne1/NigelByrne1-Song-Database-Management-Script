@@ -165,12 +165,15 @@ generate_report(){
     clear
     echo -e "~~~~~~~~~~~~\n Generate Report\n~~~~~~~~~~~~"
 
-    # Check if the database is empty
+    #Check if the database is empty, -s checks to see if file exists and if the size of the file is greater than zero
     if [ ! -s "$song_db" ]; then
         echo -e "\nThe song database is empty. Please add some songs first."
     else
+        total_songs=$(wc -l < "$song_db")
+        echo -e "\nTotal number of songs: $total_songs"
+    fi
 
-    
+    echo ""
     #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
     read -p "Press [Enter] to continue..."
 }
