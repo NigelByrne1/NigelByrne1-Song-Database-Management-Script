@@ -2,6 +2,8 @@
 # Author: Nigel Byrne 20058969
 # Song Database Management Script
 # This script is designed to manage a simple song database using bash scripting. 
+# github:
+# youtube video:  
 
 #clear terminal
 clear
@@ -169,8 +171,32 @@ generate_report(){
     if [ ! -s "$song_db" ]; then
         echo -e "\nThe song database is empty. Please add some songs first."
     else
+        #Count of total songs
         total_songs=$(wc -l < "$song_db")
         echo -e "\nTotal number of songs: $total_songs"
+
+        #Count of songs by genre
+        echo -e "\nNumber of songs by genre:"
+        echo "Pop: $(grep -c ",Pop," "$song_db")"
+        echo "Dance: $(grep -c ",Dance," "$song_db")"
+        echo "Rock: $(grep -c ",Rock," "$song_db")"
+        echo "Other: $(grep -c ",Other," "$song_db")"
+
+        #Count of songs by key
+        echo -e "\nNumber of songs by key:"
+        echo "1A: $(grep -c ",1A," "$song_db")  | 1B: $(grep -c ",1B," "$song_db")  | 2A: $(grep -c ",2A," "$song_db")  | 2B: $(grep -c ",2B," "$song_db")"
+        echo "3A: $(grep -c ",3A," "$song_db")  | 3B: $(grep -c ",3B," "$song_db")  | 4A: $(grep -c ",4A," "$song_db")  | 4B: $(grep -c ",4B," "$song_db")"
+        echo "5A: $(grep -c ",5A," "$song_db")  | 5B: $(grep -c ",5B," "$song_db")  | 6A: $(grep -c ",6A," "$song_db")  | 6B: $(grep -c ",6B," "$song_db")"
+        echo "7A: $(grep -c ",7A," "$song_db")  | 7B: $(grep -c ",7B," "$song_db")  | 8A: $(grep -c ",8A," "$song_db")  | 8B: $(grep -c ",8B," "$song_db")"
+        echo "9A: $(grep -c ",9A," "$song_db")  | 9B: $(grep -c ",9B," "$song_db")  | 10A: $(grep -c ",10A," "$song_db") | 10B: $(grep -c ",10B," "$song_db")"
+        echo "11A: $(grep -c ",11A," "$song_db") | 11B: $(grep -c ",11B," "$song_db") | 12A: $(grep -c ",12A," "$song_db") | 12B: $(grep -c ",12B," "$song_db")"
+
+        #Count of songs by BPM ranges  
+        echo -e "\nNumber of songs by BPM range:"
+        echo "0-99 BPM: $(awk -F',' '$5 >= 0 && $5 <= 99' "$song_db" | wc -l)"
+        echo "100-119 BPM: $(awk -F',' '$5 >= 100 && $5 <= 119' "$song_db" | wc -l)"
+        echo "120-139 BPM: $(awk -F',' '$5 >= 120 && $5 <= 139' "$song_db" | wc -l)"
+        echo "140 and above BPM: $(awk -F',' '$5 >= 140' "$song_db" | wc -l)"
     fi
 
     echo ""
