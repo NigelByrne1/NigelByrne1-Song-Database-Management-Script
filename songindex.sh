@@ -106,7 +106,7 @@ search_song(){
     clear
     echo -e "~~~~~~~~~~~~\n Search Song\n~~~~~~~~~~~~"
     read -p "Enter search term (ID, artist, title, BPM, or key): " search_term
-    
+    #grep -i for case insensitivity 
     searchResult=$(grep -i "$search_term" "$song_db")
 
     if [ -z "$searchResult" ]; then
@@ -128,16 +128,33 @@ remove_song(){
 
     read -p "Would you like to list all songs before removing? (y/n): " list_choice
     if [[ "$list_choice" == "y" || "$list_choice" == "Y" ]]; then
+        echo "----------------------------------------------"
+        echo "Track ID, Artist, Title, Genre, BPM, Key"
+        echo "----------------------------------------------"
         cat "$song_db"
+        echo "----------------------------------------------"
     fi
 
     while true; do
         read -p "Enter the Track ID of the song to remove: " track_id
-        #if track_id found
-            #are you sure y/n
-            #if y sed delete
-            #else no song removed
-        #else echo track not found
+        #Check if the Track ID exists in the database using grep same as search -q means it runs without printing result
+        if grep -q "^$track_id," "$song_db"; then
+            #Confirm deletion
+            read -p "Are you sure you want to remove the song with Track ID $track_id? (y/n): " confirm
+            if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
+                #Remove the line containing the specified Track ID
+                #sed -i deletes directly within the file song_db
+                #locater: ^ caret begginning of line, track_id variable eg 3, "," comma delimeter so only first part of line is searched/matched, d delete using sed
+                sed -i "/^$track_id,/d" "$song_db"
+                echo -e "\nSong with Track ID $track_id removed successfully!"
+                break
+            else
+                echo "Removal canceled. No song was removed."
+                break
+            fi
+        else
+            echo -e "\nTrack ID $track_id not found. Please enter a valid Track ID."
+        fi
     done
 
     #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
@@ -145,10 +162,15 @@ remove_song(){
 }
 
 generate_report(){
-    echo "generate a report.."
+    clear
+    echo -e "~~~~~~~~~~~~\n Generate Report\n~~~~~~~~~~~~"
 
-    #todo write rest of function
+    # Check if the database is empty
+    if [ ! -s "$song_db" ]; then
+        echo -e "\nThe song database is empty. Please add some songs first."
+    else
 
+    
     #read waits for the user to hit enter so by putting this at the end of functions it gives user chance to read output before screen is cleared 
     read -p "Press [Enter] to continue..."
 }
