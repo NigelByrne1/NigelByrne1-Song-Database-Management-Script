@@ -3,3 +3,5 @@
 3,jack,roadin',Other,115,2B
 4,Nigel,guitar song,Rock,115,2A
 5,mary,cattle,Pop,112,1B
+6,beyonce,baby,Pop,105,6A
+7,Beatles,Hey Jude,Pop,80,1B

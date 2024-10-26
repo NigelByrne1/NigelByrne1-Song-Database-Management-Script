@@ -2,8 +2,8 @@
 # Author: Nigel Byrne 20058969
 # Song Database Management Script
 # This script is designed to manage a simple song database using bash scripting. 
-# github:
-# youtube video:  
+# github: 
+# youtube video: https://youtu.be/l1FuhjptDgc
 
 
 exit_option() {
